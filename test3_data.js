@@ -16,6 +16,7 @@ exports.prepare = () => {
     });
 }
 
+//old code
 exports.getCPA = () => {
     return new Promise((resolve, reject) => {
         if(student.length == 0) {
@@ -29,6 +30,8 @@ exports.getCPA = () => {
     });
 };
 
+
+
 exports.getHighestGPA = () => {
     return new Promise((resolve, reject) => {
         if(student.length == 0) {
@@ -41,5 +44,27 @@ exports.getHighestGPA = () => {
         resolve(highestGPA);
     });
 };
+
+exports.getBSD = () => {
+    return new Promise((resolve, reject) => {
+        if(student.length == 0) {
+            reject("No students");
+        }
+
+        var bsdStudents = student.filter((student) => {
+            return student.program === "BSD";
+        });
+        resolve(bsdStudents);
+    });
+};
+
+exports.getAllStudents = () => {
+    return new Promise((resolve, reject) => {
+        if(student.length === 0) {
+            reject("No students");
+        }
+        resolve(student);
+    });
+}
 
     

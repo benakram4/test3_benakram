@@ -1,11 +1,18 @@
-//updated for git
+//Ben Akram 
+// SN: 158523217
+// cyclic link : 
 const express = require("express");
 const app = express();
 const path = require("path");
 const HTTP_PORT = process.env.PORT || 8080;
 const data = require("./test3_data.js");
 
+// add handlebars
+const exphbs = require("express-handlebars");
+app.engine('.hbs', exphbs.engine({extname: '.hbs'}));
+app.set('view engine', '.hbs');
 
+//css
 app.use(express.static('public'));
 
 function onHTTPStart() {
@@ -13,17 +20,30 @@ function onHTTPStart() {
 }
 
 app.get("/", (req, res) => {
-  var resText = "<h2>Declaration</h2><br>";
-  resText += '<p>I acknowledge the College\'s integrity policy - and my own integrity - remain in effect whether '
-    + 'my work is done remotely or onsite. <br>Any test or assignment is an act of trust between me and my instructor, ' 
-    + 'and especially with my classmates... even when no one is watching. I declare I will not break that trust.</p>'
-  resText += "Name: " + "<mark>Ben Akram</mark><br><br>";
-  resText += "Student Number: " + "<mark>158523217</mark><br><br>";
-  resText += "<a href = '/CPA'>Click to visit CPA Students</a> <br><br>";
-  resText += "<a href = '/highGPA'>Click to see who has the highest GPA</a>";
-  res.send(resText);
+  res.render("home");
 });
 
+app.get("/bsd", (req, res) => {
+  console.log("in bsd");
+      data.getBSD()
+      .then((data) => res.render("students", {data: data}))
+      .catch((err) => res.json({message: err}));
+});
+
+app.get("/allStudents", (req, res) => {
+  console.log("All: " + req.url);
+  data.getAllStudents()
+      .then((data) => res.render("students", {data: data}))
+      .catch((err) => res.json({message: err}));
+});
+
+app.get("/highestGPA", (req, res) => {
+  data.getHighestGPA()
+    .then((data) => { res.render("student", { data: data })})
+    .catch((err) => { res.jason({ message: err }) });
+});
+
+//old code
 app.get("/CPA", (req, res) => {
     data.getCPA()
         .then((data) => {res.json(data);})

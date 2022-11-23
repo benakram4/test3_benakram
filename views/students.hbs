@@ -1,0 +1,35 @@
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+
+<h1>Student List</h1>
+<table>
+    <tr>
+        <th>Student ID</th>
+        <th>Name</th>
+        <th>Program</th>
+        <th>GPA</th>
+    </tr>
+    {{#each data}}
+    <tr>
+        <td>{{this.studId}}</td>
+        <td>{{this.name}}</td>
+        <td>{{this.program}}</td>
+        <td>{{this.gpa}}</td>
+    </tr>
+    {{/each}}
+</table>
